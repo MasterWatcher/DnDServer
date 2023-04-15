@@ -1,11 +1,15 @@
 import Vapor
+import Foundation
+import DnDCore
 
 func routes(_ app: Application) throws {
     app.get { req async in
         "It works!"
     }
 
-    app.get("hello") { req async -> String in
-        "Hello, world!"
+    app.get("api", "character") { req async -> Character in
+        return .fludd
     }
 }
+
+extension Character: Content {}
