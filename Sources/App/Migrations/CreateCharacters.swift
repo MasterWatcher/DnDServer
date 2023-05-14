@@ -29,9 +29,8 @@ struct CreateCharacters: AsyncMigration {
 
         try await database.schema(Schema.characters)
             .id()
-            //.field("player_id", .uuid, .required)
-        //.foreignKey("player_id", references: "players", "id")
             .field("player_id", .uuid, .required, .references("players", "id"))
+
             .field("basicInfo_name", .string)
             .field("basicInfo_class", classType)
             .field("basicInfo_background", .string)
@@ -39,6 +38,14 @@ struct CreateCharacters: AsyncMigration {
             .field("basicInfo_alignment_ethic", ethicType)
             .field("basicInfo_alignment_moral", moralType)
             .field("basicInfo_experience", .int)
+
+            .field("abilities_strength", .int)
+            .field("abilities_dexterity", .int)
+            .field("abilities_constitution", .int)
+            .field("abilities_intelligence", .int)
+            .field("abilities_wisdom", .int)
+            .field("abilities_charisma", .int)
+
             .create()
     }
 

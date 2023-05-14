@@ -45,3 +45,17 @@ final class BasicInfoDBO: Fields {
             self.experience = experience
         }
 }
+
+extension BasicInfoDBO {
+    convenience init(_ model: BasicInfo) {
+        self.init(
+            name: model.name,
+            class: model.class,
+            background: model.background,
+            race: model.race,
+            alignment: .init(
+                ethic: model.alignment.ethic,
+                moral: model.alignment.moral),
+            experience: model.experience)
+    }
+}

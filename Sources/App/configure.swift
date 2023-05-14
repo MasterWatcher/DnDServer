@@ -5,6 +5,8 @@ import FluentPostgresDriver
 // configures your application
 public func configure(_ app: Application) throws {
 
+    app.http.server.configuration.port = 1337
+
 //    if let databaseURL = Environment.get("DATABASE_URL") {
 //        try app.databases.use(.postgres(url: databaseURL), as: .psql)
 //        print("everything is good so far")

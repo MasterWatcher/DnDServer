@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import DnDCore
 
 final class CharacterDBO: Model {
     static let schema = Schema.characters
@@ -20,26 +21,57 @@ final class CharacterDBO: Model {
     @Group(key: "basicInfo")
     var basicInfo: BasicInfoDBO
 
+    @Group(key: "abilities")
+    var abilities: AbilitiesDBO
+
     init() { }
 
-    init(id: UUID? = nil, playerID: PlayerDBO.IDValue, basicInfo: BasicInfoDBO) {
+    init(
+        id: UUID? = nil,
+        playerID: PlayerDBO.IDValue,
+        basicInfo: BasicInfoDBO,
+        abilities: AbilitiesDBO
+    ) {
         self.id = id
         self.$player.id = playerID
         self.basicInfo = basicInfo
+        self.abilities = abilities
     }
 }
 
 
 extension CharacterDBO {
-    convenience init(dto: CharacterDTO, playerID: UUID)  {
+    convenience init(model: Character, playerID: UUID)  {
         self.init(
             playerID: playerID,
-            basicInfo: .init(
-            name: dto.name,
-            class: dto.class,
-            background: dto.background,
-            race: dto.race,
-            alignment: .init(ethic: dto.alignmentEthic, moral: dto.alignmentMoral),
-            experience: dto.experience))
+            basicInfo: .init(model.basicInfo),
+            abilities: .init(model.abilities))
+    }
+}
+
+extension Character {
+    init(_ dbo: CharacterDBO) {
+        self.init(basicInfo: .init(
+            name: dbo.basicInfo.name,
+            class: dbo.basicInfo.class,
+            background: dbo.basicInfo.background,
+            playerName: dbo.player.name,
+            race: dbo.basicInfo.race,
+            alignment: .init(
+                ethic: dbo.basicInfo.alignment.ethic,
+                moral: dbo.basicInfo.alignment.moral),
+            experience: dbo.basicInfo.experience),
+                  abilities: .init(
+                    strength: dbo.abilities.strength,
+                    dexterity: dbo.abilities.dexterity,
+                    constitution: dbo.abilities.constitution,
+                    intelligence: dbo.abilities.intelligence,
+                    wisdom: dbo.abilities.wisdom,
+                    charisma: dbo.abilities.charisma),
+                  hitPoints: .init(current: 0, temporary: 0),
+                  money: .init(),
+                  skills: [],
+                  weapons: [],
+                  spells: [])
     }
 }
