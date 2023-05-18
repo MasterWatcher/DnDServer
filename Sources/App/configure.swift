@@ -27,11 +27,11 @@ public func configure(_ app: Application) throws {
     ), as: .psql)
 
 //    app.databases.use(.postgres(
-//      hostname: "ep-shrill-pond-826571.eu-central-1.aws.neon.tech",
+//      hostname: "localhost",
 //      port: PostgresConfiguration.ianaPortNumber,
-//      username: "MasterWatcher",
-//      password: "aoUJ4rg0flEX",
-//      database: "neondb",
+//      username: "vapor_username",
+//      password: "vapor_password",
+//      database: "vapor_database"
 //      tlsConfiguration: .forClient(certificateVerification: .none)
 //    ), as: .psql)
 
